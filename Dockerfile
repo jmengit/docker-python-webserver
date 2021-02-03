@@ -1,25 +1,15 @@
-FROM python:alpine
+FROM python:latest
 
-# update apk repo
-RUN echo "http://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositories && \
-    echo "http://dl-4.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories
-RUN apk add --no-cache bash
-
-# install chromedriver
-RUN apk update
-RUN apk add chromium chromium-chromedriver
-
-# Set display port and dbus env to avoid hanging. Add chromedriver to path
-ENV DISPLAY=:99
-ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
-
-# Upgrade pip
+# Upgrade pip and install dependencies
 RUN pip install --upgrade pip
-
-# Python project dependencies
-RUN pip install selenium
 RUN pip install beautifulsoup4
 RUN pip install requests
 
+# Default env variables
+ENV listen_ip=0.0.0.0
+ENV listen_port=8000
+
+EXPOSE ${listen_port}
+
 # Main script
-CMD ["bash", "/scripts/main.sh"]
+CMD python /scripts/main.py -l $listen_ip -p $listen_port
