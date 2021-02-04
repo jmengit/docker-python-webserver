@@ -8,6 +8,7 @@ RUN pip install requests
 # Default env variables
 ENV listen_ip=0.0.0.0
 ENV listen_port=8000
+ENV PYTHONUNBUFFERED 1
 
 EXPOSE ${listen_port}
 
