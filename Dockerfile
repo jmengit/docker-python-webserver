@@ -4,6 +4,7 @@ FROM python:latest
 RUN pip install --upgrade pip
 RUN pip install beautifulsoup4
 RUN pip install requests
+RUN pip install Flask
 
 # Default env variables
 ENV listen_ip=0.0.0.0
